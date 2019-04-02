@@ -1,4 +1,5 @@
 <?php
+    header('Access-Control-Allow-Origin: *');
     require('base.php');
     //  POST transacciones
     /*Indices
@@ -10,7 +11,7 @@
     telefono
     direccion
     */
-    $idUsuario = NULL;
+    $idUsuario = '';
 
     $status = '';
     $respose = '';
@@ -25,6 +26,8 @@
 
     if (isset($_POST['tipoDeUsuario'])) {
         $tipoDeUsuario = $_POST['tipoDeUsuario'];
+    }else{
+        $tipoDeUsuario = 1;
     }
 
 
@@ -41,17 +44,18 @@
     }
 
     if (isset($_POST['direccion'])) {
-        $direccion = $_POST['IdUsuario'];
+        $direccion = $_POST['direccion'];
     }
 
     if ($conn) {
         // Querys a la base de datos
         // Si el quey 
-        $ingDatos = mysqli_query($conn, "INSERT INTO usuarios(idUsuario, email, tipoDeUsuario, nombre, apellido, telefono, direccion) VALUES ($idUsuario, $email, $tipoDeUsuario, $nombre, $apellido, $telefono, $direccion)") 
-        or die mysql_error($conn);
+        $ingDatos = mysqli_query($conn, "INSERT INTO usuarios (idUsuario, email, tipoDeUsuario, nombre, apellido, telefono, direccion)
+        VALUES ('$idUsuario', '$email', '$tipoDeUsuario', '$nombre', '$apellido', '$telefono', '$direccion')");
         if ($ingDatos){
             $status = "BIEN";
             $response = "Se ingresaron los datos correctamente";
+            mysqli_commit($conn);	
         } else {
             $status = "MAL";
             $response = "No se pudieron ingresar los datos";

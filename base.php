@@ -1,4 +1,4 @@
 <?php
-    header('Acces-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Origin: *');
     $conn = mysqli_connect('localhost', 'root', '', 'cocoshop');
 ?>
